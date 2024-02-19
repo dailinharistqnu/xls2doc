@@ -98,9 +98,9 @@ for index,row in excel_data.iterrows():
                         run.text = run.text.replace(placeholder,".........")
                     else:
                         if key == "Salary":
-                            run.text = run.text.replace(placeholder,"3.680.000")
+                            run.text = run.text.replace(placeholder,"3.860.000")
                         elif key == "SalaryText":
-                            run.text = run.text.replace(placeholder,"Ba triệu sáu trăm tám mươi nghìn đồng chẵn")
+                            run.text = run.text.replace(placeholder,"Ba triệu tám trăm sáu mươi nghìn đồng chẵn")
                         else:
                             run.text = run.text.replace(placeholder,str(formatted_row[key]))
 
