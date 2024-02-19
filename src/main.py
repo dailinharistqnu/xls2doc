@@ -104,4 +104,4 @@ for index,row in excel_data.iterrows():
                         else:
                             run.text = run.text.replace(placeholder,str(formatted_row[key]))
 
-    document1.save(f'BaoHiem/HopDong_{formatted_row["No"]}_{row["Employee"]}_BaoHiem.docx')
+    document1.save(f'BaoHiem/HopDong_{formatted_row["No"]}_{row["Employee"]}_BH.docx')
