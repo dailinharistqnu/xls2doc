@@ -69,7 +69,6 @@ for index,row in excel_data.iterrows():
             formatted_row[col] = adjust_number(row[col])
         if excel_data[col] is None or excel_data[col].empty:
             formatted_row[col] = "......"
-
     for paragraph in document.paragraphs:
         for run in paragraph.runs:
             # print(run.text)
@@ -79,8 +78,10 @@ for index,row in excel_data.iterrows():
                 if placeholder in run.text:
                     # print(f"Attempting to replace: {placeholder} with data: {formatted_row[key]}")
                 # print(formatted_row[key])
-                    if pd.isna(formatted_row[key]):
-                        run.text = run.text.replace(placeholder,".........")
+                    if pd.isna(formatted_row[key]) and key=="Add":
+                        print(formatted_row["Employee"]+" hợp đồng thường bị trống thông tin excel")
+                        # run.text=""
+                        run.text = run.text.replace(placeholder,str(""))
                     else:
                         run.text = run.text.replace(placeholder,str(formatted_row[key]))
     document.save(f'HD/HopDong_{formatted_row["No"]}_{row["Employee"]}.docx')
@@ -94,14 +95,15 @@ for index,row in excel_data.iterrows():
             for key in row.keys():
                 placeholder = f'{{{key}}}'
                 if placeholder in run.text:
-                    if pd.isna(formatted_row[key]):
-                        run.text = run.text.replace(placeholder,".........")
+                    if key == "Add" or placeholder=="Add":
+                        # run.text=None
+                        run.text = run.text.replace(placeholder,"")
+                        # paragraph.clear()
+                    if key == "Salary":
+                        run.text = run.text.replace(placeholder,"3.860.000")
+                    elif key == "SalaryText":
+                        run.text = run.text.replace(placeholder,"Ba triệu tám trăm sáu mươi nghìn đồng chẵn")
                     else:
-                        if key == "Salary":
-                            run.text = run.text.replace(placeholder,"3.860.000")
-                        elif key == "SalaryText":
-                            run.text = run.text.replace(placeholder,"Ba triệu tám trăm sáu mươi nghìn đồng chẵn")
-                        else:
-                            run.text = run.text.replace(placeholder,str(formatted_row[key]))
+                        run.text = run.text.replace(placeholder,str(formatted_row[key]))
 
     document1.save(f'BaoHiem/HopDong_{formatted_row["No"]}_{row["Employee"]}_BH.docx')
